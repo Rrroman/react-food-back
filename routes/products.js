@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getAll, get, add, replace, remove } = require('../data/event');
+const { getAll, get, add, replace, remove } = require('../data/product');
 const {
   isValidText,
   isValidDate,
@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const events = await getAll();
-    res.json({ events: events });
+    const products = await getAll();
+    res.json({ products: products });
   } catch (error) {
     next(error);
   }
@@ -20,8 +20,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const event = await get(req.params.id);
-    res.json({ event: event });
+    const product = await get(req.params.id);
+    res.json({ product: product });
   } catch (error) {
     next(error);
   }
@@ -50,14 +50,14 @@ router.post('/', async (req, res, next) => {
 
   if (Object.keys(errors).length > 0) {
     return res.status(422).json({
-      message: 'Adding the event failed due to validation errors.',
+      message: 'Adding the product failed due to validation errors.',
       errors,
     });
   }
 
   try {
     await add(data);
-    res.status(201).json({ message: 'Event saved.', event: data });
+    res.status(201).json({ message: 'product saved.', product: data });
   } catch (error) {
     next(error);
   }
@@ -86,14 +86,14 @@ router.patch('/:id', async (req, res, next) => {
 
   if (Object.keys(errors).length > 0) {
     return res.status(422).json({
-      message: 'Updating the event failed due to validation errors.',
+      message: 'Updating the product failed due to validation errors.',
       errors,
     });
   }
 
   try {
     await replace(req.params.id, data);
-    res.json({ message: 'Event updated.', event: data });
+    res.json({ message: 'product updated.', product: data });
   } catch (error) {
     next(error);
   }
@@ -102,7 +102,7 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await remove(req.params.id);
-    res.json({ message: 'Event deleted.' });
+    res.json({ message: 'product deleted.' });
   } catch (error) {
     next(error);
   }
