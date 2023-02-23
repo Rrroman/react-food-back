@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 
-const productRoutes = require('./routes/products');
+const mealRoutes = require('./routes/meals');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/products', productRoutes);
+app.use('/meals', mealRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.status || 500;
