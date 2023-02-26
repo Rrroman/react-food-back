@@ -11,6 +11,11 @@ function isValidImageUrl(value) {
   return value && value.startsWith('http');
 }
 
+function isValidPrice(value) {
+  return !isNaN(value) && value !== 'Invalid price';
+}
+
 exports.isValidText = isValidText;
 exports.isValidDate = isValidDate;
 exports.isValidImageUrl = isValidImageUrl;
+exports.isValidPrice = isValidPrice;

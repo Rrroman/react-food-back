@@ -3,7 +3,7 @@ const express = require('express');
 const { getAll, get, add, replace, remove } = require('../data/meal');
 const {
   isValidText,
-  isValidDate,
+  isValidPrice,
   isValidImageUrl,
 } = require('../util/validation');
 
@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
     const meals = await getAll();
     setTimeout(() => {
       res.json({ meals: meals });
-    }, 1000);
+    }, setDelay);
   } catch (error) {
     next(error);
   }
@@ -34,20 +34,20 @@ router.post('/', async (req, res, next) => {
 
   let errors = {};
 
-  if (!isValidText(data.title)) {
-    errors.title = 'Invalid title.';
+  if (!isValidText(data.name)) {
+    errors.name = 'Invalid name.';
   }
 
   if (!isValidText(data.description)) {
     errors.description = 'Invalid description.';
   }
 
-  if (!isValidDate(data.date)) {
-    errors.date = 'Invalid date.';
+  if (!isValidPrice(data.price)) {
+    errors.price = 'Invalid price.';
   }
 
-  if (!isValidImageUrl(data.image)) {
-    errors.image = 'Invalid image.';
+  if (!isValidText(data.cooking_description)) {
+    errors.cooking_description = 'Cooking description.';
   }
 
   if (Object.keys(errors).length > 0) {
@@ -59,7 +59,10 @@ router.post('/', async (req, res, next) => {
 
   try {
     await add(data);
-    res.status(201).json({ message: 'meal saved.', meal: data });
+
+    setTimeout(() => {
+      res.status(201).json({ message: 'meal saved.', meal: data });
+    }, setDelay());
   } catch (error) {
     next(error);
   }
@@ -70,20 +73,20 @@ router.patch('/:id', async (req, res, next) => {
 
   let errors = {};
 
-  if (!isValidText(data.title)) {
-    errors.title = 'Invalid title.';
+  if (!isValidText(data.name)) {
+    errors.name = 'Invalid name.';
   }
 
   if (!isValidText(data.description)) {
     errors.description = 'Invalid description.';
   }
 
-  if (!isValidDate(data.date)) {
-    errors.date = 'Invalid date.';
+  if (!isValidPrice(data.price)) {
+    errors.price = 'Invalid price.';
   }
 
-  if (!isValidImageUrl(data.image)) {
-    errors.image = 'Invalid image.';
+  if (!isValidText(data.cooking_description)) {
+    errors.cooking_description = 'Cooking description.';
   }
 
   if (Object.keys(errors).length > 0) {
@@ -109,5 +112,15 @@ router.delete('/:id', async (req, res, next) => {
     next(error);
   }
 });
+
+// Get a random number between 1 and 100 (70% of the time) and between 100 and 2000 (30% of the time).
+function setDelay() {
+  const rand = Math.random();
+  if (rand < 0.7) {
+    return Math.floor(Math.random() * 100) + 1;
+  } else {
+    return Math.floor(Math.random() * (2000 - 100 + 1)) + 100;
+  }
+}
 
 module.exports = router;
