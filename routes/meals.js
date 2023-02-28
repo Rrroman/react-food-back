@@ -12,9 +12,10 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const meals = await getAll();
+
     setTimeout(() => {
       res.json({ meals: meals });
-    }, setDelay);
+    }, setDelay());
   } catch (error) {
     next(error);
   }
@@ -119,7 +120,7 @@ function setDelay() {
   if (rand < 0.7) {
     return Math.floor(Math.random() * 100) + 1;
   } else {
-    return Math.floor(Math.random() * (2000 - 100 + 1)) + 100;
+    return Math.floor(Math.random() * (4000 - 100 + 1)) + 100;
   }
 }
 
