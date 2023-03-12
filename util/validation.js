@@ -15,7 +15,12 @@ function isValidPrice(value) {
   return !isNaN(value) && value !== 'Invalid price';
 }
 
+function isValidEmail(value) {
+  return value && value.includes('@');
+}
+
 exports.isValidText = isValidText;
 exports.isValidDate = isValidDate;
 exports.isValidImageUrl = isValidImageUrl;
 exports.isValidPrice = isValidPrice;
+exports.isValidEmail = isValidEmail;
