@@ -1,11 +1,7 @@
 const express = require('express');
 
 const { getAll, get, add, replace, remove } = require('../data/meal');
-const {
-  isValidText,
-  isValidPrice,
-  isValidImageUrl,
-} = require('../util/validation');
+const { isValidText, isValidPrice } = require('../util/validation');
 
 const router = express.Router();
 
